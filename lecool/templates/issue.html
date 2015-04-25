@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<ol>
+{% for item in items %}
+<li>
+    <img src="{{ item.image }}">
+    <h3>{{ item.title }}</h3>
+    <h5>{{ item.type }}</h5>
+    
+    {% if item.date %}
+    <h5>{{ item.date.strftime('%A, %d %B %Y') }}</h5>
+    {% endif %}
+
+    <p>{{ item.description|safe }}</p>
+
+    {% if item.location %}<p>Location: {{ item.location }}</p>{% endif %}
+    {% if item.time %}<p>Time: {{ item.time }}</p>{% endif %}
+    {% if item.price %}<p>Price: {{ item.price }}</p>{% endif %}
+    {% if item.map %}
+    <p>
+        <a href="{{ item.map }}">Map</a> 
+        {% if item.latitude and item.longitude %}
+        ({{ item.latitude }}, {{ item.longitude }})
+        {% endif %}
+    </p>
+    {% endif %}
+</li>
+{% endfor %}
+</ol>
+
+{% endblock %}
