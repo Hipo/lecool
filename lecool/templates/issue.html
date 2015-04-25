@@ -2,8 +2,10 @@
 
 {% block content %}
 
+<h1>{{ issue.title }}</h1>
+
 <ol>
-{% for item in items %}
+{% for item in issue.events %}
 <li>
     <img src="{{ item.image }}">
     <h3>{{ item.title }}</h3>
