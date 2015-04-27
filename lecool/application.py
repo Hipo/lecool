@@ -4,6 +4,8 @@ from boto import dynamodb2
 from flask import Flask, render_template, request, url_for, redirect, Response, abort
 from json import dumps
 
+from werkzeug.contrib.fixers import ProxyFix
+
 from db import DatabaseManager, Issue, AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 from parsers import parse_issue, data_handler
 
@@ -47,19 +49,20 @@ def detail(issue_number):
     except ValueError:
         abort(404)
 
-    # try:
-    #     issue = [Issue(i) for i in app.db.table.query_2(
-    #         issue_number__eq=issue_number,
-    #         index="IssueIndex",
-    #     )][0]
-    # except:
-    #     issue = None
+    try:
+        issue = [Issue(i) for i in app.db.table.query(
+            edition__eq="Istanbul",
+            issue_number__eq=issue_number,
+            index="IssueIndex",
+        )][0]
+    except:
+        issue = None
 
-    # if issue is None:
-    issue = parse_issue(issue_number)
+    if issue is None:
+        issue = parse_issue(issue_number)
 
-        # if issue:
-        #     app.db.table.put_item(data=issue.serialize())
+        if issue:
+            app.db.table.put_item(data=issue.serialize())
 
     if issue is None:
         abort(404)
@@ -72,6 +75,9 @@ def detail(issue_number):
         )
     else:
         return render_template("issue.html", issue=issue)
+
+
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 
 if __name__ == "__main__":

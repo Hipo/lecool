@@ -59,7 +59,7 @@ class Event(object):
 
         date = event_info.get("date")
 
-        if type(date) == "str":
+        if type(date) is str or type(date) is unicode:
             self.date = datetime.date(*[int(i) for i in date.split("-")])
         else:
             self.date = date
@@ -95,7 +95,7 @@ class Issue(object):
 
         start_date = issue_info.get("start_date")
 
-        if type(start_date) == "str":
+        if type(start_date) is str or type(start_date) is unicode:
             self.start_date = datetime.date(*[int(i) for i in start_date.split("-")])
         else:
             self.start_date = start_date
