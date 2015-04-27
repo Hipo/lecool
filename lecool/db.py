@@ -72,7 +72,7 @@ class Event(object):
             "image": self.image,
             "longitude": self.longitude,
             "latitude": self.latitude,
-            "location": self.location,
+            "location": self.location if self.location else None,
             "time": self.time,
             "type": self.type,
             "price": self.price,

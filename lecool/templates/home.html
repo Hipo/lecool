@@ -4,7 +4,7 @@
 
 <ol>
 {% for issue in issues %}
-<li><a href="/issues/{{ issue.issue_number }}">{{ issue.issue_number }}</a></li>
+<li><a href="/issues/{{ issue.issue_number }}">{{ issue.edition }} {{ issue.title }} - {{ issue.start_date.strftime('%d %B %Y') }} (<a href="{{ issue.url }}">source</a>)</a></li>
 {% endfor %}
 </ol>
 

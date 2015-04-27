@@ -173,6 +173,9 @@ def parse_issue(issue_number):
         spans = right_rows[1].findall("span")
 
         for span in spans:
+            if span.text is None:
+                continue
+
             span_value = span.text.strip()
 
             if (spans.index(span) == 0):
