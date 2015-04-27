@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<ol>
+{% for issue in issues %}
+<li><a href="/issues/{{ issue.issue_number }}">{{ issue.issue_number }}</a></li>
+{% endfor %}
+</ol>
+
+{% endblock %}

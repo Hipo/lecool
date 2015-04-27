@@ -34,8 +34,13 @@ def home():
     """
     Render landing page
     """
+    issues = [Issue(i) for i in app.db.table.query_2(
+        edition__eq="Istanbul",
+        index="IssueIndex",
+    )]
+
     return render_template("home.html", 
-        
+        issues=issues,
     )
 
 
@@ -50,7 +55,7 @@ def detail(issue_number):
         abort(404)
 
     try:
-        issue = [Issue(i) for i in app.db.table.query(
+        issue = [Issue(i) for i in app.db.table.query_2(
             edition__eq="Istanbul",
             issue_number__eq=issue_number,
             index="IssueIndex",
